@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cek Khodam</title>
+        <style>
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #000;
+                color: #333;
+            }
+            .container {
+                background: rgba(191,188,195,0.25);
+                padding: 20px 40px;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                width: 260px;
+                z-index: 1000;
+                backdrop-filter: blur(2.5px);
+            }
+            h1 {
+                margin-bottom: 0px;
+                font-size: 24px;
+                color: #007bff;
+            }
+            .des {
+                margin-bottom: 20px;
+            }
+            form {
+                display: flex;
+                flex-direction: column;
+            }
+            input[type="text"] {
+                padding: 10px;
+                margin-bottom: 20px;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                font-size: 16px;
+            }
+            button {
+                padding: 10px;
+                background-color: #007bff;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                font-size: 16px;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+            }
+            button:hover {
+                background-color: #0056b3;
+            }
+            #loading {
+                display: none;
+                margin-top: 20px;
+                font-size: 18px;
+                color: #007bff;
+            }
+            #result {
+                display: none;
+                margin-top: 20px;
+                text-align: center;
+            }
+            .img-res {
+                width: 100px;
+                height: auto;
+                border-radius: 50%;
+                margin-top: 20px;
+            }
+
+            #bg {
+                position: fixed;
+                top: 0;
+                right: 0;
+                width: auto;
+                height: 100%;
+                z-index: 10;
+                background-attachment: fixed;
+                animation: bganim 120s ease-in-out;
+                animation-iteration-count: infinite;
+                animation-fill-mode: forwards;
+            }
+            .fadebg {
+                animation: fadebg 160s ease-in-out;
+                animation-iteration-count: infinite;
+                animation-fill-mode: forwards;
+            }
+            .fadein {
+                animation: fadein 160s ease-in-out;
+                animation-iteration-count: infinite;
+                animation-fill-mode: forwards;
+            }
+            @-webkit-keyframes bganim {
+                0% {
+                    transform: translateX(0%);
+                }
+                50% {
+                    transform: translateX(65%);
+                }
+                100% {
+                    transform: translateX(0%);
+                }
+            }
+            @keyframes fadebg {
+                0% {
+                    opacity: 100%;
+                }
+                50% {
+                    opacity: 0%;
+                }
+                100% {
+                    opacity: 100%;
+                }
+            }
+            @keyframes fadein {
+                0% {
+                    opacity: 0%;
+                }
+                50% {
+                    opacity: 100%;
+                }
+                100% {
+                    opacity: 0%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="fadebg">
+            <img id="bg" src="/bg1.jpg" />
+        </div>
+        <div class="fadein">
+            <img id="bg" src="/bg2.jpg" />
+        </div>
+        <div class="container">
+            <h1>Cek Khodam</h1>
+            <h4 class="des">yang selama ini yang menemanimu</h4>
+            <form id="khodamForm">
+                <input
+                    type="text"
+                    id="nameInput"
+                    placeholder="Masukkan nama Anda"
+                    required
+                />
+                <button type="submit">Submit</button>
+            </form>
+            <div id="loading">Membaca mantra...</div>
+            <div id="result">
+                <h4 id="hres">Khodam Anda:</h4>
+                <img class="img-res" id="khodamImage" src="" alt="Gambar Khodam" />
+                <p id="khodamName"></p>
+            </div>
+        </div>
+
+        <script>
+            const khodams = [
+                {
+                    name: "Khodam Api",
+                    image: "https://example.com/khodam-api.jpg"
+                },
+                {
+                    name: "Khodam Air",
+                    image: "https://example.com/khodam-air.jpg"
+                },
+                {
+                    name: "Khodam Angin",
+                    image: "https://example.com/khodam-angin.jpg"
+                },
+                {
+                    name: "Khodam Bumi",
+                    image: "https://example.com/khodam-bumi.jpg"
+                }
+            ];
+
+            function getKhodamIndex(name) {
+                let hash = 0;
+                for (let i = 0; i < name.length; i++) {
+                    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+                }
+                return Math.abs(hash) % khodams.length;
+            }
+
+            document
+                .getElementById("khodamForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const name = document.getElementById("nameInput").value;
+                    const khodamIndex = getKhodamIndex(name);
+                    const khodam = khodams[khodamIndex];
+
+                    document.getElementById("loading").style.display = "block";
+                    document.getElementById("result").style.display = "none";
+
+                    setTimeout(() => {
+                        document.getElementById("loading").style.display =
+                            "none";
+                        document.getElementById("khodamName").innerText =
+                            khodam.name;
+                        document.getElementById("khodamImage").src =
+                            khodam.image;
+                        document.getElementById("hres").innerText = "Khodam yang ada di diri " + name + ":";
+                        document.getElementById("result").style.display =
+                            "block";
+                    }, 1000);
+                });
+        </script>
+    </body>
+</html>
