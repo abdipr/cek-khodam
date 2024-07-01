@@ -3,32 +3,45 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+        />
+        <link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Nunito&display=swap"
+        />
         <title>Cek Khodam</title>
         <style>
             body {
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                font-family: "Nunito", sans-serif;
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 height: 100vh;
                 margin: 0;
                 background-color: #000;
-                color: #333;
+                color: #dedee1;
+                overflow: hidden;
             }
             .container {
-                background: rgba(191,188,195,0.25);
-                padding: 20px 40px;
+                background: rgba(191, 188, 195, 0.15);
                 border-radius: 10px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 text-align: center;
-                width: 260px;
+                align-items: center;
+                padding: 20px;
+                max-width: calc(100vw - 60px);
+                width: calc(100vw - 70px);
                 z-index: 1000;
-                backdrop-filter: blur(2.5px);
+                max-height: 100%;
+                overflow-y: auto;
+                margin-top: 30px;
             }
-            h1 {
+            h2 {
                 margin-bottom: 0px;
-                font-size: 24px;
-                color: #007bff;
+                color: #3796fc;
             }
             .des {
                 margin-bottom: 20px;
@@ -38,6 +51,7 @@
                 flex-direction: column;
             }
             input[type="text"] {
+                font-family: inherit;
                 padding: 10px;
                 margin-bottom: 20px;
                 border: 1px solid #ddd;
@@ -45,34 +59,37 @@
                 font-size: 16px;
             }
             button {
+                font-family: inherit;
                 padding: 10px;
-                background-color: #007bff;
+                background-color: #3796fc;
                 color: white;
                 border: none;
                 border-radius: 5px;
                 font-size: 16px;
                 cursor: pointer;
                 transition: background-color 0.3s ease;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             }
             button:hover {
-                background-color: #0056b3;
+                background-color: #0272e9;
             }
             #loading {
                 display: none;
                 margin-top: 20px;
                 font-size: 18px;
-                color: #007bff;
+                color: #3796fc;
             }
             #result {
                 display: none;
-                margin-top: 20px;
+                margin-top: 0px;
                 text-align: center;
             }
             .img-res {
-                width: 100px;
+                max-width: calc(100vw - 70px);
+                width: calc(100vw - 70px);
                 height: auto;
-                border-radius: 50%;
-                margin-top: 20px;
+                border-radius: 5px;
+                margin-top: 10px;
             }
 
             #bg {
@@ -110,13 +127,13 @@
             }
             @keyframes fadebg {
                 0% {
-                    opacity: 100%;
+                    opacity: 80%;
                 }
                 50% {
                     opacity: 0%;
                 }
                 100% {
-                    opacity: 100%;
+                    opacity: 80%;
                 }
             }
             @keyframes fadein {
@@ -124,7 +141,7 @@
                     opacity: 0%;
                 }
                 50% {
-                    opacity: 100%;
+                    opacity: 80%;
                 }
                 100% {
                     opacity: 0%;
@@ -140,42 +157,56 @@
             <img id="bg" src="/bg2.jpg" />
         </div>
         <div class="container">
-            <h1>Cek Khodam</h1>
-            <h4 class="des">yang selama ini yang menemanimu</h4>
+            <h2><b>Cek Khodam</b></h2>
             <form id="khodamForm">
+            <font class="des">yang selama ini menemanimu</font>
                 <input
                     type="text"
                     id="nameInput"
-                    placeholder="Masukkan nama Anda"
+                    placeholder="Masukin nama"
                     required
                 />
-                <button type="submit">Submit</button>
-            </form>
-            <div id="loading">Membaca mantra...</div>
+                <button id="submit" type="submit"><b>Cek</b></button>
+            <h3 id="loading">Lagi baca mantra dulu...</h3>
             <div id="result">
-                <h4 id="hres">Khodam Anda:</h4>
-                <img class="img-res" id="khodamImage" src="" alt="Gambar Khodam" />
-                <p id="khodamName"></p>
+                <h3 id="hres"></h3>
+                <center>
+                <img
+                    class="img-res"
+                    id="khodamImage"
+                    src=""
+                    alt="Gambar Khodam"
+                />
+                </center>
+                <h3 id="khodamName"></h3>
+                <p id="khodamDesc"></p>
             </div>
+            </form>
+            <br>
+            <p style="font-size:14px;">Dibuat oleh <font onclick="window.open('https://abdi.es')" color="#3796fc">Abdi</font></p>
         </div>
 
         <script>
             const khodams = [
                 {
                     name: "Khodam Api",
-                    image: "https://example.com/khodam-api.jpg"
+                    image: "/1.jpeg",
+                    desc: "Mengeluarkan api"
                 },
                 {
                     name: "Khodam Air",
-                    image: "https://example.com/khodam-air.jpg"
+                    image: "/2.jpeg",
+                    desc: "Bikin banjir"
                 },
                 {
                     name: "Khodam Angin",
-                    image: "https://example.com/khodam-angin.jpg"
+                    image: "/3.jpeg",
+                    desc: "Mengembuskan nafas"
                 },
                 {
                     name: "Khodam Bumi",
-                    image: "https://example.com/khodam-bumi.jpg"
+                    image: "/4.jpeg",
+                    desc: "Gempa"
                 }
             ];
 
@@ -193,7 +224,7 @@
                     event.preventDefault();
                     const name = document.getElementById("nameInput").value;
                     const khodamIndex = getKhodamIndex(name);
-                    const khodam = khodams[khodamIndex];
+                    const khodam = khodams[Math.floor(Math.random() * (khodams.length - 0) + 0)];
 
                     document.getElementById("loading").style.display = "block";
                     document.getElementById("result").style.display = "none";
@@ -201,14 +232,19 @@
                     setTimeout(() => {
                         document.getElementById("loading").style.display =
                             "none";
+                        document.getElementById("nameInput").style.display = "none";
+                        document.getElementById("submit").innerHTML = "<b>Cek ulang</b>";
                         document.getElementById("khodamName").innerText =
                             khodam.name;
+                        document.getElementById("khodamDesc").innerText =
+                            khodam.desc;
                         document.getElementById("khodamImage").src =
                             khodam.image;
-                        document.getElementById("hres").innerText = "Khodam yang ada di diri " + name + ":";
+                        document.getElementById("hres").innerHTML =
+                            "Khodam yang ada di diri <font color='#3796fc'>" + name + "</font>:";
                         document.getElementById("result").style.display =
                             "block";
-                    }, 1000);
+                    }, 1500);
                 });
         </script>
     </body>
